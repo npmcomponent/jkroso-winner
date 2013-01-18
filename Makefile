@@ -34,6 +34,7 @@ clean:
 Readme.md: src/index.js docs/head.md docs/tail.md
 	@cat docs/head.md > Readme.md
 	@cat src/index.js | dox -a | sed s/^\#\#/\#\#\#/ >> Readme.md
+	@node_modules/.bin/mocha -R markdown test/index.test.js >> Readme.md
 	@cat docs/tail.md >> Readme.md
 
 .PHONY: all build test clean install

@@ -17,10 +17,11 @@ var toFunction = require('to-function')
  * 
  * @param {Array} array
  * @param {String|RegExp|Function} [fn]
+ * @param {Any} min, if no value is greater than this there is no winner
  * @return {Any}
  */
 
-function max (array, fn) {
+function max (array, fn, min) {
 	var i = array.length
 	if (!i) return
 	if (fn) {
@@ -36,7 +37,11 @@ function max (array, fn) {
 			}
 		}
 		
-		return max
+		return min != null 
+			? maxv >= min 
+				? max 
+				: undefined
+			: max
 	} else {
 		var max = array[0]
 		
@@ -44,7 +49,11 @@ function max (array, fn) {
 			if (array[i] > max) max = array[i]
 		}
 		
-		return max
+		return min != null 
+			? max >= min 
+				? max 
+				: undefined
+			: max
 	}
 }
 

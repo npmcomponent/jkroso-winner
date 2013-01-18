@@ -1,6 +1,6 @@
 {
   "name": "winner",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Compare the items of an array and return the biggest",
   "main": "src/index.js",
   "dependencies": {

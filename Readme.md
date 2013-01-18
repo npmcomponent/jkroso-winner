@@ -35,6 +35,62 @@ winner([{a:1}, {a:2}], function(item){
 }) // => {a:2}
 ```
 
+## Spec
+   - [literal values](#literal-values)
+   - [with comparators](#with-comparators)
+<a name=""></a>
+ 
+<a name="literal-values"></a>
+### literal values
+should compare using >.
+
+```js
+winner([1,2,3]).should.equal(3)
+winner(['a', 'b', 'c']).should.equal('c')
+winner([new Date(1), new Date(2)]).getTime().should.equal(2)
+```
+
+should return undefined for an empty array.
+
+```js
+should.not.exist(winner([]))
+```
+
+should return undefined if no values match the mimimum criteria.
+
+```js
+should.not.exist(winner([1,2,3], null, 5))
+```
+
+<a name="with-comparators"></a>
+### with comparators
+should return the item not the value of the comparator.
+
+```js
+winner(arr, function (item) {
+  return item.a
+}).should.deep.equal({a:3})
+```
+
+should return the first one if they are all the same.
+
+```js
+var arr = [{a:1}, {a:1}, {a:1}]
+winner(arr, function (i) {
+  return i.a
+}).should.equal(arr[0])
+```
+
+should return undefined if no values match the mimimum criteria.
+
+```js
+should.not.exist(
+  winner(arr, function (item) {
+    return item.a
+  }, 5)
+)
+```
+
 ## Running the tests
 
 Before you can run any tests you will need to execute `$ npm install`

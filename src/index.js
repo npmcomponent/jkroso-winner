@@ -38,31 +38,26 @@ function winner (array, fn, min) {
 			if (min != null && fn(max, min) < 0) return
 			return max
 		}
-		else {
-			var max = array[0]
-			  , maxv = fn(max)
-		
-			for (var i = 0, len = array.length; i < len; i++) {
-				var v = fn(array[i])
-				if (v > maxv) {
-					maxv = v
-					max = array[i]
-				}
+		var max = array[0]
+		  , maxv = fn(max)
+	
+		for (var i = 0, len = array.length; i < len; i++) {
+			var v = fn(array[i])
+			if (v > maxv) {
+				maxv = v
+				max = array[i]
 			}
 		}
-	} else {
-		var max = array[0]
-		
-		for (var i = 0, len = array.length; i < len; i++) {
-			if (array[i] > max) max = array[i]
-		}
+		if (min != null && maxv < min) return
+		return max
+	} 
+	var max = array[0]
+	
+	for (var i = 0, len = array.length; i < len; i++) {
+		if (array[i] > max) max = array[i]
 	}
-
-	return min != null 
-		? max >= min 
-			? max 
-			: undefined
-		: max
+	if (min != null && max < min) return
+	return max
 }
 
 module.exports = winner

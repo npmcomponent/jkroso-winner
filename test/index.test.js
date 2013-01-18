@@ -21,6 +21,9 @@ describe('with functions', function () {
     winner(arr, function (item) {
       return item.a
     }).should.deep.equal({a:3})
+    winner(arr, function (item) {
+      return item.a
+    }, 1).should.deep.equal({a:3})
   })
   it('should return the first one if they are all the same', function () {
     var arr = [{a:1}, {a:1}, {a:1}]

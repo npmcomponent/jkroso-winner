@@ -25,10 +25,10 @@ function max (array, fn) {
 	if (!i) return
 	if (fn) {
 		if (typeof fn !== 'function') fn = toFunction(fn)
-		var max = array[--i]
+		var max = array[0]
 		  , maxv = fn(max)
 		
-		while (i--) {
+		for (var i = 0, len = array.length; i < len; i++) {
 			var v = fn(array[i])
 			if (v > maxv) {
 				maxv = v
@@ -38,9 +38,9 @@ function max (array, fn) {
 		
 		return max
 	} else {
-		var max = array[--i]
+		var max = array[0]
 		
-		while (i--) {
+		for (var i = 0, len = array.length; i < len; i++) {
 			if (array[i] > max) max = array[i]
 		}
 		

@@ -12,10 +12,16 @@ describe('literal values', function () {
 	})
 })
 
-describe('with comparitors', function () {
-	it('should return the item not the value of the comparitor', function () {
+describe('with comparators', function () {
+	it('should return the item not the value of the comparator', function () {
 		winner([{a:1}, {a:2}, {a:3}], function (item) {
 			return item.a
 		}).should.deep.equal({a:3})
+	})
+	it('should return the first one if they are all the same', function () {
+		var arr = [{a:1}, {a:1}, {a:1}]
+		winner(arr, function (i) {
+			return i.a
+		}).should.equal(arr[0])
 	})
 })

@@ -5,56 +5,64 @@
 var toFunction = require('to-function')
 
 /**
- * Compare the values of an array based on some comparison 
- * and return the value that comes out on top. If you don't pass
- * a value for fn the values will be compared with `a > b`
- *
+ * Pick the best value from an array.
+ * 
+ * Caveats:
+ *   
+ * - undefined, null, and NaN can't be compared to anything
+ * - strings can only be compared to numbers if they can coerce to numbers 
+ *   
  *   winner([1,2,3]) // => 3
  *   winner([{a:1}, {a:2}], 'a') // => {a:2}
  *   winner([{a:1}, {a:2}], function(item){
  *     return item.a
  *   }) // => {a:2}
- * 
+ *   winner(['a', 'b', 'c'], function(a, b){
+ *     if (a < b) return -1
+ *     return +(a > b)
+ *   }, 'd') // => undefined
+ *   
  * @param {Array} array
  * @param {String|RegExp|Function} [fn]
  * @param {Any} min, if no value is greater than this there is no winner
  * @return {Any}
  */
 
-function max (array, fn, min) {
-	var i = array.length
-	if (!i) return
+function winner (array, fn, min) {
 	if (fn) {
 		if (typeof fn !== 'function') fn = toFunction(fn)
-		var max = array[0]
-		  , maxv = fn(max)
+		// Its a comparitor function
+		if (fn.length > 1) {
+			array.sort(fn)
+			var max = array[array.length - 1]
+			if (min != null && fn(max, min) < 0) return
+			return max
+		}
+		else {
+			var max = array[0]
+			  , maxv = fn(max)
 		
-		for (var i = 0, len = array.length; i < len; i++) {
-			var v = fn(array[i])
-			if (v > maxv) {
-				maxv = v
-				max = array[i]
+			for (var i = 0, len = array.length; i < len; i++) {
+				var v = fn(array[i])
+				if (v > maxv) {
+					maxv = v
+					max = array[i]
+				}
 			}
 		}
-		
-		return min != null 
-			? maxv >= min 
-				? max 
-				: undefined
-			: max
 	} else {
 		var max = array[0]
 		
 		for (var i = 0, len = array.length; i < len; i++) {
 			if (array[i] > max) max = array[i]
 		}
-		
-		return min != null 
-			? max >= min 
-				? max 
-				: undefined
-			: max
 	}
+
+	return min != null 
+		? max >= min 
+			? max 
+			: undefined
+		: max
 }
 
-module.exports = max
+module.exports = winner

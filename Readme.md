@@ -1,6 +1,6 @@
-# winner
+# Winner
 
-Compare the items of an array and return the biggest
+Compare the values of an array based on some comparison and return the value that comes out on top.If you don't pass a value for fn the values will be compared with `a > b`. If you pass a two argument function it will be treated as a comparitor see [Array#sort](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/sort) for how that works. Otherwise its return value will be used for comparison in place of the actual value.
 
 ## Getting Started
 
@@ -19,25 +19,33 @@ Then its a good idea to add winner to your `bundledDependencies` array in your p
 ```javascript
 var winner = require('winner')
 ```
-  - [max()](#max)
+  - [winner()](#winner)
 
-### max()
+### winner()
 
-  Compare the values of an array based on some comparison 
-  and return the value that comes out on top. If you don't pass
-  a value for fn the values will be compared with `a > b`
+  Pick the best value from an array.
   
+  Caveats:
+    
+  - undefined, null, and NaN can't be compared to anything
+  - strings can only be compared to numbers if they can coerce to numbers 
+    
 ```js
 winner([1,2,3]) // => 3
 winner([{a:1}, {a:2}], 'a') // => {a:2}
 winner([{a:1}, {a:2}], function(item){
   return item.a
 }) // => {a:2}
+winner(['a', 'b', 'c'], function(a, b){
+  if (a < b) return -1
+  return +(a > b)
+}, 'd') // => undefined
 ```
 
 ## Spec
    - [literal values](#literal-values)
-   - [with comparators](#with-comparators)
+   - [with functions](#with-functions)
+     - [that take two arguments](#with-functions-that-take-two-arguments)
 <a name=""></a>
  
 <a name="literal-values"></a>
@@ -62,8 +70,8 @@ should return undefined if no values match the mimimum criteria.
 should.not.exist(winner([1,2,3], null, 5))
 ```
 
-<a name="with-comparators"></a>
-### with comparators
+<a name="with-functions"></a>
+### with functions
 should return the item not the value of the comparator.
 
 ```js
@@ -81,7 +89,7 @@ winner(arr, function (i) {
 }).should.equal(arr[0])
 ```
 
-should return undefined if no values match the mimimum criteria.
+should return undefined if no values match the minimum criteria.
 
 ```js
 should.not.exist(
@@ -89,6 +97,30 @@ should.not.exist(
     return item.a
   }, 5)
 )
+```
+
+<a name="with-functions-that-take-two-arguments"></a>
+### that take two arguments
+should treat it as a comparator.
+
+```js
+winner(arr, function (a, b) {
+  return a.a - b.a
+}).should.deep.equal({a:3})
+winner(['a', 'b', 'c'], function (a, b) {
+  return a < b ? -1 : +(a > b)
+}).should.equal('c')
+```
+
+should return undefined if the minimum value is not met.
+
+```js
+should.not.exist(winner(['a', 'b', 'c'], function (a, b) {
+  return a < b ? -1 : +(a > b)
+}, 'd'))
+should.not.exist(winner(arr, function (a, b) {
+  return a.a - b.a
+}, {a:4}))
 ```
 
 ## Running the tests

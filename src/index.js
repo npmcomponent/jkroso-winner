@@ -29,6 +29,8 @@ var toFunction = require('to-function')
  */
 
 function winner (array, fn, min) {
+	var len = array.length
+	if (!len) return
 	if (fn) {
 		if (typeof fn !== 'function') fn = toFunction(fn)
 		// Its a comparitor function
@@ -41,7 +43,7 @@ function winner (array, fn, min) {
 		var max = array[0]
 		  , maxv = fn(max)
 	
-		for (var i = 0, len = array.length; i < len; i++) {
+		for (var i = 0; i < len; i++) {
 			var v = fn(array[i])
 			if (v > maxv) {
 				maxv = v
@@ -53,7 +55,7 @@ function winner (array, fn, min) {
 	} 
 	var max = array[0]
 	
-	for (var i = 0, len = array.length; i < len; i++) {
+	for (var i = 0; i < len; i++) {
 		if (array[i] > max) max = array[i]
 	}
 	if (min != null && max < min) return

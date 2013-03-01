@@ -25,6 +25,11 @@ describe('with functions', function () {
       return item.a
     }, 1).should.deep.equal({a:3})
   })
+  it('should not call the function if the array is empty', function () {
+    winner([], function(){
+      throw new Error('should not be called')
+    })
+  })
   it('should return the first one if they are all the same', function () {
     var arr = [{a:1}, {a:1}, {a:1}]
     winner(arr, function (i) {

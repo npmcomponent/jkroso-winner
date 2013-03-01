@@ -1,14 +1,11 @@
 {
   "name": "winner",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Compare the items of an array and return the biggest",
   "main": "src/index.js",
   "dependencies": {
     "to-function": "~1.2.0"
   },
-  "bundledDependencies": [
-    "to-function"
-  ],
   "devDependencies": {
     "mocha": "*",
     "chai": "*",

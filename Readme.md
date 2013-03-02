@@ -1,5 +1,6 @@
 # Winner
 
+Compare the items of an array and return the biggest.
 Compare the values of an array based on some comparison and return the value that comes out on top.If you don't pass a value for fn the values will be compared with `a > b`. If you pass a two argument function it will be treated as a comparitor see [Array#sort](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/sort) for how that works. Otherwise its return value will be used for comparison in place of the actual value.
 
 ## Getting Started
@@ -42,94 +43,13 @@ winner(['a', 'b', 'c'], function(a, b){
 }, 'd') // => undefined
 ```
 
-## Spec
-   - [literal values](#literal-values)
-   - [with functions](#with-functions)
-     - [that take two arguments](#with-functions-that-take-two-arguments)
-<a name=""></a>
- 
-<a name="literal-values"></a>
-### literal values
-should compare using >.
-
-```js
-winner([1,2,3]).should.equal(3)
-winner(['a', 'b', 'c']).should.equal('c')
-winner([new Date(1), new Date(2)]).getTime().should.equal(2)
-```
-
-should return undefined for an empty array.
-
-```js
-should.not.exist(winner([]))
-```
-
-should return undefined if no values match the mimimum criteria.
-
-```js
-should.not.exist(winner([1,2,3], null, 5))
-```
-
-<a name="with-functions"></a>
-### with functions
-should return the item not the value of the comparator.
-
-```js
-winner(arr, function (item) {
-  return item.a
-}).should.deep.equal({a:3})
-```
-
-should return the first one if they are all the same.
-
-```js
-var arr = [{a:1}, {a:1}, {a:1}]
-winner(arr, function (i) {
-  return i.a
-}).should.equal(arr[0])
-```
-
-should return undefined if no values match the minimum criteria.
-
-```js
-should.not.exist(
-  winner(arr, function (item) {
-    return item.a
-  }, 5)
-)
-```
-
-<a name="with-functions-that-take-two-arguments"></a>
-### that take two arguments
-should treat it as a comparator.
-
-```js
-winner(arr, function (a, b) {
-  return a.a - b.a
-}).should.deep.equal({a:3})
-winner(['a', 'b', 'c'], function (a, b) {
-  return a < b ? -1 : +(a > b)
-}).should.equal('c')
-```
-
-should return undefined if the minimum value is not met.
-
-```js
-should.not.exist(winner(['a', 'b', 'c'], function (a, b) {
-  return a < b ? -1 : +(a > b)
-}, 'd'))
-should.not.exist(winner(arr, function (a, b) {
-  return a.a - b.a
-}, {a:4}))
-```
 
 ## Running the tests
 
-Before you can run any tests you will need to execute `$ npm install`
+	$ npm install
+	$ make test
 
-Running the test in node is just a matter of executing `$ make test`
-
-Running in the browser though requires a build. To do that execute `$ make test/built.js`. If all goes well you should then be able to open your browser to the test directory and watch the test suite run.
+Running in the browser requires a build. To do that execute `$ make test/built.js`
 
 _Note: these commands don't work on windows._ 
 

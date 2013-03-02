@@ -1,10 +1,10 @@
+
 ## Running the tests
 
-Before you can run any tests you will need to execute `$ npm install`
+	$ npm install
+	$ make test
 
-Running the test in node is just a matter of executing `$ make test`
-
-Running in the browser though requires a build. To do that execute `$ make test/built.js`. If all goes well you should then be able to open your browser to the test directory and watch the test suite run.
+Running in the browser requires a build. To do that execute `$ make test/built.js`
 
 _Note: these commands don't work on windows._ 
 

@@ -1,27 +1,7 @@
 {
-  "name": "winner",
-  "version": "0.3.2",
+  "name": "jkroso-winner",
   "description": "Compare the items of an array and return the biggest",
-  "main": "src/index.js",
-  "dependencies": {
-    "to-function": "~1.2.0"
-  },
-  "devDependencies": {
-    "mocha": "*",
-    "chai": "~1.5.0",
-    "bigfile": "~0.3.0",
-    "sourcegraph": "~0.5.0"
-  },
-  "scripts": {
-    "test": "make test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/jkroso/winner.git"
-  },
-  "bugs": {
-    "url": "https://github.com/jkroso/winner/issues"
-  },
+  "version": "0.3.2",
   "keywords": [
     "array",
     "util",
@@ -29,6 +9,10 @@
     "biggest",
     "find"
   ],
-  "author": "Jakeb Rosoman",
+  "main": "src/index.js",
+  "styles": [],
+  "dependencies": {
+    "component-to-function": "git://github.com/npmcomponent/component-to-function.git"
+  },
   "license": "MIT"
 }

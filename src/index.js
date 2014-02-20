@@ -2,7 +2,7 @@
  * Modules deps
  */
 
-var toFunction = require('to-function')
+var toFunction = require('component-to-function')
 
 /**
  * Pick the best value from an array.
